@@ -16,7 +16,7 @@ export class TicketEntity {
 	@Column({type: 'decimal'})
 	price: number;
 
-	@Column({ type: 'date' })
+	@Column({ type: 'date' }) // узнать шо делать, если тут datetime
 	created_at: string;
 
 	@ManyToOne(() => TicketTypeEntity, (type) => type.tickets, {
