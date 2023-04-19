@@ -4,4 +4,11 @@ import { TicketEntity } from './entities/ticket.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
-export class TicketsService {}
+export class TicketsService {
+
+	 constructor(
+    @InjectRepository(TicketEntity)
+    private ticketRepository: Repository<TicketEntity>,
+  ) {}
+
+}

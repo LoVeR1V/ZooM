@@ -22,7 +22,7 @@ export class UserEntity {
   @Column()
   phone: string;
 
-	@Column()
+	@Column({ type: 'date' })
 	birthdate: Date;
 
 	@ManyToOne(() => UserRoleEntity, (role) => role.users, {
@@ -36,7 +36,7 @@ export class UserEntity {
     onUpdate: 'CASCADE',
     onDelete: 'RESTRICT'
   })
-  @JoinColumn({name: 'client_status_id'})
+  @JoinColumn({name: 'user_status_id'})
   user_status_id: UserStatusEntity;
 
 }
