@@ -1,6 +1,8 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, Unique } from "typeorm";
 import { UserRoleEntity } from "./user-role.entity";
 import { UserStatusEntity } from "./user-status.entity";
+import { MembershipEntity } from "src/modules/membership/entities/membership.entity";
+import { TicketEntity } from "src/modules/tickets/entities/ticket.entity";
 
 @Entity('users')
 export class UserEntity {
@@ -39,5 +41,12 @@ export class UserEntity {
   @JoinColumn({name: 'user_status_id'})
   user_status_id: UserStatusEntity;
 
+  @OneToMany(() => MembershipEntity, (memberships) => memberships.user_id)
+  memberships: MembershipEntity[];
+  
+  @OneToMany(() => TicketEntity, (ticket) => ticket.user_id)
+  tickets: TicketEntity[];
+
+  //узнать, и если необходимо, то добавить связи, в которые идет user
 }
  

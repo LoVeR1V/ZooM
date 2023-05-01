@@ -13,6 +13,6 @@ export class TicketTypeEntity {
 	@Column({type: 'mediumtext'})
   description: string;
 
-  @OneToMany(() => TicketEntity, (tickets) => tickets.ticket_type_id)
+  @OneToMany(() => TicketEntity, (ticket) => ticket.ticket_type_id)
   tickets: TicketEntity[];
 }

@@ -1,5 +1,8 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, Unique } from "typeorm";
-import { TicketTypeEntity } from "./tour-type.entity";
+import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, Unique } from "typeorm";
+import { TourTypeEntity } from "./tour-type.entity";
+import { TicketEntity } from "src/modules/tickets/entities/ticket.entity";
+import { ZoneEntity } from "src/modules/animals/entities/zone.entity";
+import { AnimalEntity } from "src/modules/animals/entities/animals.entity";
 
 @Entity('tours')
 export class TourEntity {
@@ -24,9 +27,29 @@ export class TourEntity {
 	@Column()
 	remaining: number;
 
-	@Column({ type: 'date' })  //что делать, если надо datetime?
+	@Column({ type: 'datetime' })  
 	created_at: string;
+	
+	@ManyToOne(() => TourTypeEntity, (tour_type) => tour_type.tours, {
+    onUpdate: 'CASCADE',
+    onDelete: 'RESTRICT'
+  })
+  @JoinColumn({name: 'tour_type_id'})
+  tour_type: TourEntity;
 
-	// добавить zone
+	@ManyToOne(() => ZoneEntity, (zone) => zone.tours, {
+    onUpdate: 'CASCADE',
+    onDelete: 'RESTRICT'
+  })
+  @JoinColumn({name: 'zone_id'})
+  zone: TourEntity;
+
+	@OneToMany(() => TicketEntity, (ticket) => ticket.tour)
+  tickets: TicketEntity[];
+
+	@ManyToMany(() => AnimalEntity, (animal) => animal.tours)
+  animals: AnimalEntity[];
+
+	
 
 }

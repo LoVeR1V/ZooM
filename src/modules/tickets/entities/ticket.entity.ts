@@ -1,6 +1,8 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, Unique } from "typeorm";
 import { TicketTypeEntity } from "./ticket-type.entity";
 import { TicketStatusEntity } from "./ticket-status.entity";
+import { UserEntity } from "src/modules/users/entities/user.entity";
+import { TourEntity } from "src/modules/tours/entities/tour.entity";
 
 @Entity('tickets')
 export class TicketEntity {
@@ -16,7 +18,7 @@ export class TicketEntity {
 	@Column({type: 'decimal'})
 	price: number;
 
-	@Column({ type: 'date' }) // узнать шо делать, если тут datetime
+	@Column({ type: 'datetime' }) 
 	created_at: string;
 
 	@ManyToOne(() => TicketTypeEntity, (type) => type.tickets, {
@@ -32,4 +34,21 @@ export class TicketEntity {
   })
   @JoinColumn({name: 'ticket_status_id'})
   ticket_status_id: TicketStatusEntity;
+
+  @ManyToOne(() => UserEntity, (user) => user.tickets, {
+    onUpdate: 'CASCADE',
+    onDelete: 'RESTRICT'
+  })
+  @JoinColumn({name: 'user_id'})
+  user_id: UserEntity;
+
+  @ManyToOne(() => TourEntity, (tour) => tour.tickets, {
+    onUpdate: 'CASCADE',
+    onDelete: 'RESTRICT'
+  })
+  @JoinColumn({name: 'tour_id'})
+  tour: TourEntity;
+  
+
+
 }

@@ -10,7 +10,8 @@ export class TicketStatusEntity {
   @Column()
   name_ticket_status: string;
 
-	@OneToMany(() => TicketEntity, (tic) => tic.ticket_status_id)
+	@OneToMany(() => TicketEntity, (ticket) => ticket.ticket_status_id)
   tickets: TicketEntity[];
+ 
 
 }
