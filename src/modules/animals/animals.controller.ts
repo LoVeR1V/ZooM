@@ -35,7 +35,7 @@ export class AnimalsController {
   }
 
 	@Delete(':id')
-  async deleteCoachById(
+  async deleteAnimalById(
     @Param('id') id: number,
   ): Promise<void> {
     return await this.animalsService.deleteAnimalById(id);

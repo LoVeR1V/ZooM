@@ -2,6 +2,7 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColum
 import { SpecialityEntity } from "./speciality.entity";
 import { LicenseEntity } from "./license.entity";
 import { AnimalEntity } from "src/modules/animals/entities/animals.entity";
+import { HealthMonitoringEntity } from "src/modules/health_monitoring/entities/health-monitoring.entity";
 
 @Entity('staff')
 export class StaffEntity {
@@ -52,6 +53,9 @@ export class StaffEntity {
 	})
 	@JoinColumn({name: 'animals'})
 	animal: AnimalEntity[];
+
+	@OneToMany(() => HealthMonitoringEntity, (monitorings) => monitorings.staff)
+  monitorings: HealthMonitoringEntity;
 
 
 }

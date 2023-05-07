@@ -22,6 +22,8 @@ import { MembershipStatusDTO } from './modules/membership/DTO/membership-status.
 import { MembershipStatusEntity } from './modules/membership/entities/membership-status.entity';
 import { MembershipTypeEntity } from './modules/membership/entities/membership-type.entity';
 import { AnimalsModule } from './modules/animals/animals.module';
+import { HealthMonitoringModule } from './modules/health_monitoring/health-monitoring.module';
+import { StaffModule } from './modules/staff/staff.module';
 
 @Module({
 
@@ -56,7 +58,9 @@ import { AnimalsModule } from './modules/animals/animals.module';
         MembershipTypeEntity
       ],   
     }),
-    AnimalsModule
+    AnimalsModule,
+    HealthMonitoringModule,
+    StaffModule
   ],
   controllers: [AppController],
   providers: [AppService],

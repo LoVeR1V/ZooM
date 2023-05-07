@@ -2,9 +2,18 @@ import { IsDateString, IsInt, IsNotEmpty, IsNumber, IsOptional, IsString, MaxLen
 import { Transform, Type } from "class-transformer";
 import { HealthStatusDTO } from  "./health-status.dto";
 
-export class AnimalDTO {
+export class HealthMonitoringDTO {
 	@IsInt()
 	id_heatlh: number;
+
+	@IsInt()
+  @IsNotEmpty()
+  staff_id: number;
+
+	@IsOptional()
+  @IsInt()
+  @Transform(({ value }) => value === undefined || value === '' ? 1 : parseInt(value, 10))
+  health_status_id: number;
 
 	@IsString()
 	@IsNotEmpty()
@@ -29,14 +38,5 @@ export class AnimalDTO {
 	@IsNotEmpty()
 	@MaxLength(1000)
 	conclusion: string;
-
-	@IsOptional()
-  @IsInt()
-  @Transform(({ value }) => value === undefined || value === '' ? 1 : parseInt(value, 10))
-  health_status_id: number;
-
-	@IsInt()
-  @IsNotEmpty()
-  staff_id: number;
 
 }

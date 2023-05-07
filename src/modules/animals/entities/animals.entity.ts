@@ -52,6 +52,6 @@ export class AnimalEntity {
     onUpdate: 'CASCADE',
     onDelete: 'RESTRICT'
   })
-  monitorings: HealthMonitoringEntity[];
+  monitorings: HealthMonitoringEntity;
 
 }
