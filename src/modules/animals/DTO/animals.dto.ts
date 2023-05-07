@@ -4,7 +4,12 @@ import { ZoneDTO } from  "./zone.dto";
 
 export class AnimalDTO {
 	@IsInt()
-	id_animal: number;
+	id_animals: number;
+
+	@IsOptional()
+  @IsInt()
+  @Transform(({ value }) => value === undefined || value === '' ? 1 : parseInt(value, 10))
+  zone_id: number;
 
 	@IsString()
 	@IsNotEmpty()
@@ -40,8 +45,5 @@ export class AnimalDTO {
   @Type(() => Date)
   died_at: Date;
 	
-	@IsOptional()
-  @IsInt()
-  @Transform(({ value }) => value === undefined || value === '' ? 1 : parseInt(value, 10))
-  zone_id: number;
+	
 }

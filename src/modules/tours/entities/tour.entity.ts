@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, Unique } from "typeorm";
+import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, Unique } from "typeorm";
 import { TourTypeEntity } from "./tour-type.entity";
 import { TicketEntity } from "src/modules/tickets/entities/ticket.entity";
 import { ZoneEntity } from "src/modules/animals/entities/zone.entity";
@@ -48,8 +48,11 @@ export class TourEntity {
   tickets: TicketEntity[];
 
 	@ManyToMany(() => AnimalEntity, (animal) => animal.tours)
-  animals: AnimalEntity[];
-
-	
+	 @JoinTable({
+    name: 'animals_and_tours', 
+    joinColumn: { name: 'tour_id', referencedColumnName: 'id_tour' },
+    inverseJoinColumn: { name: 'animal_id', referencedColumnName: 'id_animals' },
+  })
+	animals: AnimalEntity[];
 
 }

@@ -7,7 +7,8 @@ import { AnimalEntity } from './entities/animals.entity';
 @Module({
 
   imports: [
-    TypeOrmModule.forFeature([AnimalEntity]),
+    TypeOrmModule.forFeature([
+      AnimalEntity]),
   ],
   controllers: [AnimalsController],
   providers: [AnimalsService]

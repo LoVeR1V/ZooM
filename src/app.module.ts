@@ -16,6 +16,12 @@ import { LicenseEntity } from './modules/staff/entities/license.entity';
 import { SpecialityEntity } from './modules/staff/entities/speciality.entity';
 import { HealthMonitoringEntity } from './modules/health_monitoring/entities/health-monitoring.entity';
 import { HealthStatusEntity } from './modules/health_monitoring/entities/health-status.entity';
+import { ZoneEntity } from './modules/animals/entities/zone.entity';
+import { MembershipEntity } from './modules/membership/entities/membership.entity';
+import { MembershipStatusDTO } from './modules/membership/DTO/membership-status.dto';
+import { MembershipStatusEntity } from './modules/membership/entities/membership-status.entity';
+import { MembershipTypeEntity } from './modules/membership/entities/membership-type.entity';
+import { AnimalsModule } from './modules/animals/animals.module';
 
 @Module({
 
@@ -28,6 +34,7 @@ import { HealthStatusEntity } from './modules/health_monitoring/entities/health-
       "username": "root",
       "password": "root",
       "database": "mydb",
+      "synchronize": false, //If true, then all entities that are not here but are in MySQL will be deleted in MySQL
       "entities": [
         UserEntity,
         UserRoleEntity,
@@ -42,10 +49,14 @@ import { HealthStatusEntity } from './modules/health_monitoring/entities/health-
         LicenseEntity,
         SpecialityEntity,
         HealthMonitoringEntity,
-        HealthStatusEntity
-      ],
-      "synchronize": false //If true, then all entities that are not here but are in MySQL will be deleted in MySQL
+        HealthStatusEntity,
+        ZoneEntity,
+        MembershipEntity,
+        MembershipStatusEntity,
+        MembershipTypeEntity
+      ],   
     }),
+    AnimalsModule
   ],
   controllers: [AppController],
   providers: [AppService],

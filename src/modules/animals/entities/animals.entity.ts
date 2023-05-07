@@ -7,7 +7,14 @@ import { HealthMonitoringEntity } from "src/modules/health_monitoring/entities/h
 @Entity('animals')
 export class AnimalEntity {
   @PrimaryGeneratedColumn()
-  id_animal: number;
+  id_animals: number;
+
+  @ManyToOne(() => ZoneEntity, (zone) => zone.animals, {
+    onUpdate: 'CASCADE',
+    onDelete: 'RESTRICT'
+  })
+  @JoinColumn({name: 'zone_id'})
+  zone: ZoneEntity;
 
 	@Column()
 	name: string;
@@ -30,22 +37,15 @@ export class AnimalEntity {
 	@Column({ type: 'datetime' })
 	died_at: string;
 
-	@ManyToOne(() => ZoneEntity, (zone) => zone.animals, {
-    onUpdate: 'CASCADE',
-    onDelete: 'RESTRICT'
-  })
-  @JoinColumn({name: 'zone_id'})
-  zone: ZoneEntity;
-
 	@OneToMany(() => StaffEntity, (staff) => staff.animal)
 	staff1: StaffEntity[];
 
 	@ManyToMany(() => TourEntity, (tour) => tour.animals)
-  @JoinTable({
-    name: 'animals_and_tours', 
-    joinColumn: { name: 'animal_id', referencedColumnName: 'id_animals' },
-    inverseJoinColumn: { name: 'tour_id', referencedColumnName: 'id_tour' },
-  })
+  // @JoinTable({
+  //   name: 'animals_and_tours', 
+  //   joinColumn: { name: 'animal_id', referencedColumnName: 'id_animals' },
+  //   inverseJoinColumn: { name: 'tour_id', referencedColumnName: 'id_tour' },
+  // })
   tours: TourEntity[];
 
 	@ManyToMany(() => HealthMonitoringEntity, (monitoring) => monitoring.animals, {
