@@ -7,6 +7,20 @@ export class StaffDTO {
 	@IsInt()
 	id_staff: number;
 
+	@IsOptional()
+  @IsInt()
+  @Transform(({ value }) => value === undefined || value === '' ? 1 : parseInt(value, 10))
+  speciality_id: number;
+
+	@IsInt()
+  @IsNotEmpty()
+  animal_id: number;
+
+	@IsOptional()
+  @IsInt()
+  @Transform(({ value }) => value === undefined || value === '' ? 1 : parseInt(value, 10))
+  license_id: number;
+
 	@IsString()
 	@IsNotEmpty()
 	@MaxLength(45)
@@ -48,18 +62,10 @@ export class StaffDTO {
   @IsNotEmpty()
   birthdate: Date;
 
-	@IsOptional()
-  @IsInt()
-  @Transform(({ value }) => value === undefined || value === '' ? 1 : parseInt(value, 10))
-  license_id: number;
+	
 
-	@IsOptional()
-  @IsInt()
-  @Transform(({ value }) => value === undefined || value === '' ? 1 : parseInt(value, 10))
-  speciality_id: number;
+	
 
-	@IsInt()
-  @IsNotEmpty()
-  animal_id: number;
+	
 
 }

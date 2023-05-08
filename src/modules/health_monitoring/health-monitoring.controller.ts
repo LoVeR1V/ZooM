@@ -18,7 +18,7 @@ export class HealthMonitoringController {
 
 	@Get(':id')
   async getHealtById(@Param('id') id: number): Promise<HealthMonitoringEntity> {
-    return await this.healthMonitoringService.findHealthById(id);
+    return await this.healthMonitoringService.getHealtById(id);
   }
 
 	@Get('get-all-healths')

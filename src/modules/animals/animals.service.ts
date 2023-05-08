@@ -8,7 +8,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 export class AnimalsService {
   constructor(
     @InjectRepository(AnimalEntity)
-    private animalRepository: Repository<AnimalEntity>,
+    private readonly animalRepository: Repository<AnimalEntity>,
   ) {}
 
     async createAnimal(animal: AnimalEntity): Promise<AnimalEntity> {
@@ -21,9 +21,13 @@ export class AnimalsService {
       })
     }
 
-  async getAllAnimals(): Promise<AnimalEntity[]> {
-    return await this.animalRepository.find();
-  }
+    async getAllAnimals(): Promise<AnimalEntity[]> {
+  const queryBuilder = this.animalRepository.createQueryBuilder('animal');
+  
+  const result = await queryBuilder.getMany();
+  console.log(result);
+  return result;
+}
 
 async updateAnimalById(id_animal: number, updatedAnimal: AnimalEntity): Promise<AnimalEntity> {
   const animal = await this.animalRepository.findOne({

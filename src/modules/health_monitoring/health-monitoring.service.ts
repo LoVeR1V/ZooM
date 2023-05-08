@@ -14,7 +14,7 @@ export class HealthMonitoringService {
      return await this.healthRepository.save(health);
     }
 
-     async findHealthById(id: number): Promise<HealthMonitoringEntity> {
+     async getHealtById(id: number): Promise<HealthMonitoringEntity> {
       return await this.healthRepository.findOne({
         where: {id_health:id},
       })

@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Param, Post, Put, Req } from '@nestjs/co
 import { AnimalsService } from './animals.service';
 import { AnimalDTO } from './DTO/animals.dto';
 import { AnimalEntity } from './entities/animals.entity';
-import { async } from 'rxjs';
+
 
 @Controller('animals')
 export class AnimalsController {

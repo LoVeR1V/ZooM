@@ -37,21 +37,21 @@ export class StaffEntity {
   	onUpdate: 'CASCADE',
     onDelete: 'RESTRICT'
   })
-  @JoinColumn({name: 'speciality'})
+  @JoinColumn({name: 'speciality_id'})
   speciality: SpecialityEntity;
 
 	@ManyToOne(() => LicenseEntity, (lic) => lic.staff1, {
   	onUpdate: 'CASCADE',
     onDelete: 'RESTRICT'
   })
-  @JoinColumn({name: 'license'})
+  @JoinColumn({name: 'license_id'})
   license: LicenseEntity;
 
 	@ManyToOne(() => AnimalEntity, (animal) => animal.staff1, {
 		onUpdate: 'CASCADE',
 		onDelete: 'RESTRICT'
 	})
-	@JoinColumn({name: 'animals'})
+	@JoinColumn({name: 'animal_id'})
 	animal: AnimalEntity[];
 
 	@OneToMany(() => HealthMonitoringEntity, (monitorings) => monitorings.staff)
