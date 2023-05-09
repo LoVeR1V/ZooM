@@ -18,14 +18,14 @@ export class MembershipEntity {
   benefits: string;
 
 	@ManyToOne(() => MembershipStatusEntity, (membershipStatus) => membershipStatus.memberships, {
-  	onUpdate: 'RESTRICT',
+  	onUpdate: 'CASCADE',
     onDelete: 'RESTRICT'
   })
   @JoinColumn({name: 'membership_status_id'})
   membership_status_id: MembershipStatusEntity;
 
   @ManyToOne(() => MembershipTypeEntity, (membershipType) => membershipType.memberships, {
-    onUpdate: 'RESTRICT',
+    onUpdate: 'CASCADE',
     onDelete: 'RESTRICT'
   })
   @JoinColumn({name: 'membership_type_id'})

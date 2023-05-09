@@ -24,6 +24,10 @@ import { MembershipTypeEntity } from './modules/membership/entities/membership-t
 import { AnimalsModule } from './modules/animals/animals.module';
 import { HealthMonitoringModule } from './modules/health_monitoring/health-monitoring.module';
 import { StaffModule } from './modules/staff/staff.module';
+import { MembershipModule } from './modules/membership/membership.module';
+import { TicketsModule } from './modules/tickets/tickets.module';
+import { ToursModule } from './modules/tours/tours.module';
+import { UserModule } from './modules/users/users.module';
 
 @Module({
 
@@ -60,7 +64,11 @@ import { StaffModule } from './modules/staff/staff.module';
     }),
     AnimalsModule,
     HealthMonitoringModule,
-    StaffModule
+    StaffModule,
+    MembershipModule,
+    TicketsModule,
+    ToursModule,
+    UserModule
   ],
   controllers: [AppController],
   providers: [AppService],
