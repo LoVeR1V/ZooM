@@ -9,6 +9,20 @@ export class TourEntity {
   @PrimaryGeneratedColumn()
   id_tour: number;
 
+	@ManyToOne(() => TourTypeEntity, (tour_type) => tour_type.tours, {
+    onUpdate: 'CASCADE',
+    onDelete: 'RESTRICT'
+  })
+  @JoinColumn({name: 'tour_type_id'})
+  tour_type: TourEntity;
+
+	@ManyToOne(() => ZoneEntity, (zone) => zone.tours, {
+    onUpdate: 'CASCADE',
+    onDelete: 'RESTRICT'
+  })
+  @JoinColumn({name: 'zone_id'})
+  zone: TourEntity;
+
 	@Column()
 	name_tour: string;
 
@@ -29,20 +43,6 @@ export class TourEntity {
 
 	@Column({ type: 'datetime' })  
 	created_at: string;
-	
-	@ManyToOne(() => TourTypeEntity, (tour_type) => tour_type.tours, {
-    onUpdate: 'CASCADE',
-    onDelete: 'RESTRICT'
-  })
-  @JoinColumn({name: 'tour_type_id'})
-  tour_type: TourEntity;
-
-	@ManyToOne(() => ZoneEntity, (zone) => zone.tours, {
-    onUpdate: 'CASCADE',
-    onDelete: 'RESTRICT'
-  })
-  @JoinColumn({name: 'zone_id'})
-  zone: TourEntity;
 
 	@OneToMany(() => TicketEntity, (ticket) => ticket.tour)
   tickets: TicketEntity[];

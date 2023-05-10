@@ -3,9 +3,19 @@ import { Transform, Type } from "class-transformer";
 import { UserRoleDTO } from  "./user-role.dto";
 import { UserStatusDTO } from  "./user-status.dto";
 
-export class UserTO {
+export class UserDTO {
 	@IsInt()
 	id_user: number;
+
+	@IsOptional()
+  @IsInt()
+  @Transform(({ value }) => value === undefined || value === '' ? 1 : parseInt(value, 10))
+  user_role_id: number;
+
+	@IsOptional()
+  @IsInt()
+  @Transform(({ value }) => value === undefined || value === '' ? 1 : parseInt(value, 10))
+  user_status_id: number;
 
 	@IsString()
 	@IsNotEmpty()
@@ -37,15 +47,5 @@ export class UserTO {
   @Type(() => Date)
   @IsNotEmpty()
   birthday: Date;
-
-	@IsOptional()
-  @IsInt()
-  @Transform(({ value }) => value === undefined || value === '' ? 1 : parseInt(value, 10))
-  user_status_id: number;
-
-	@IsOptional()
-  @IsInt()
-  @Transform(({ value }) => value === undefined || value === '' ? 1 : parseInt(value, 10))
-  user_role_id: number;
 
 }

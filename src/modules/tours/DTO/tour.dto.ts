@@ -6,6 +6,15 @@ export class TourDTO {
 	@IsInt()
 	id_tour: number;
 
+	@IsOptional()
+  @IsInt()
+  @Transform(({ value }) => value === undefined || value === '' ? 1 : parseInt(value, 10))
+  tour_type_id: number;
+		
+	@IsInt()
+  @IsNotEmpty()
+  zone_id: number;
+
 	@IsString()
 	@IsNotEmpty()
 	@MaxLength(45)
@@ -36,14 +45,5 @@ export class TourDTO {
 	@IsNotEmpty()
   @IsString()
   created_at: string; //there is datetime type
-
-	@IsOptional()
-  @IsInt()
-  @Transform(({ value }) => value === undefined || value === '' ? 1 : parseInt(value, 10))
-  tour_type_id: number;
-
-	@IsInt()
-  @IsNotEmpty()
-  zone_id: number;
 
 }
