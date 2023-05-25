@@ -14,7 +14,7 @@ export class TicketEntity {
     onDelete: 'RESTRICT'
   })
   @JoinColumn({name: 'user_id'})
-  user_id: UserEntity;
+  user: UserEntity;
 
   @ManyToOne(() => TicketTypeEntity, (type) => type.tickets, {
   	onUpdate: 'CASCADE',
@@ -48,11 +48,5 @@ export class TicketEntity {
 
 	@Column({ type: 'datetime' }) 
 	created_at: string;
-
   
-
-
-  
-
-
 }

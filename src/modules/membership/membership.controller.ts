@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Req } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Req } from '@nestjs/common';
 import { MembershipService } from './membership.service';
 import { MembershipDTO } from './DTO/membership.dto';
 import { MembershipEntity } from './entities/membership.entity';
@@ -7,7 +7,7 @@ import { MembershipEntity } from './entities/membership.entity';
 export class MembershipController {
 	constructor(private readonly membershipService: MembershipService){}
 
-	@Post('create-membership')  //not working
+	@Post('create-membership')  
 	async createMembership(@Body() createMembershipDTO: MembershipDTO ): Promise<MembershipEntity>{
 		const membershipEntity = new MembershipEntity();
     Object.assign(membershipEntity, createMembershipDTO);
@@ -23,7 +23,7 @@ export class MembershipController {
   async getAllMemberships(): Promise<MembershipEntity[]> {
     return await this.membershipService.getAllMemberships();
   }
-//not working
+
 	@Put(':id')
   async updateMembershipById(@Param('id') id: number, @Body() updateMembershipDTO: MembershipDTO): Promise<MembershipEntity> {
     const updatedMembership = new MembershipEntity();
@@ -38,4 +38,16 @@ export class MembershipController {
     return await this.membershipService.deleteMembershipById(id);
   }
 	
+  //@Roles('')
+  @Post('create-mem') 
+  async createMem(
+    @Body() createMembershipDTO: MembershipDTO,
+    @Body('user_id', new ParseIntPipe()) user_id: number
+    ): Promise<MembershipEntity> {
+    const mem = new MembershipEntity();
+    Object.assign(mem, createMembershipDTO);
+    return await this.membershipService.createMem(mem, user_id);
+  }
+
+
 }

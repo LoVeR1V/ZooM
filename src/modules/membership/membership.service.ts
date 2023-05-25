@@ -2,14 +2,16 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { MembershipEntity } from './entities/membership.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { UsersService } from '../users/users.service';
 
 @Injectable()
 export class MembershipService {
 	constructor(
     @InjectRepository(MembershipEntity)
-    private membershipRepository: Repository<MembershipEntity>,
+    private readonly membershipRepository: Repository<MembershipEntity>,
+    private readonly usersService: UsersService,
   ) {}
-//not working
+
   async createMembership(membership: MembershipEntity): Promise<MembershipEntity> {
      return await this.membershipRepository.save(membership);
     }
@@ -24,7 +26,7 @@ export class MembershipService {
    async getAllMemberships(): Promise<MembershipEntity[]> {
     return await this.membershipRepository.find();
   }
-//not working
+
   async updateMembershipById(id: number, updatedMembership: MembershipEntity): Promise<MembershipEntity> {
   const membership = await this.membershipRepository.findOne({
         where: {id_membership:id},
@@ -44,6 +46,18 @@ export class MembershipService {
     if(result.affected === 0) {
       throw new NotFoundException(`Membership with id ${id} not found`);
     }
+  }
+
+  async createMem(mem: MembershipEntity, user_id: number): Promise<MembershipEntity> {
+    const res_user = await this.usersService.getUserById(user_id);
+  
+    if (!res_user) {
+      throw new NotFoundException(`User with id ${user_id} not found`);
+    }
+  
+    mem.user = res_user;
+  
+    return await this.membershipRepository.save(mem);
   }
 
 }

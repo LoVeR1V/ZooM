@@ -41,10 +41,10 @@ export class UserEntity {
 	@Column({ type: 'date' })
 	birthday: Date;
 
-  @OneToMany(() => MembershipEntity, (memberships) => memberships.user_id)
+  @OneToMany(() => MembershipEntity, (memberships) => memberships.user)
   memberships: MembershipEntity[];
   
-  @OneToMany(() => TicketEntity, (ticket) => ticket.user_id)
+  @OneToMany(() => TicketEntity, (ticket) => ticket.user)
   tickets: TicketEntity[];
 
   //узнать, и если необходимо, то добавить связи, в которые идет user

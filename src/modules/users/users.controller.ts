@@ -3,6 +3,7 @@ import { UsersService } from './users.service';
 import { UserDTO } from './DTO/user.dto';
 import { UserEntity } from './entities/user.entity';
 import { async } from 'rxjs';
+import { TicketEntity } from '../tickets/entities/ticket.entity';
 
 @Controller('users')
 export class UsersController {
@@ -40,4 +41,12 @@ export class UsersController {
   ): Promise<void> {
     return await this.usersService.deleteUserById(id);
   }
+
+  // @Get('get-user-tickets/:id')
+  // async getUserTickets(@Param('id') id: number): Promise<TicketEntity[]> {
+  // return await this.usersService.getUserTickets(id);
+  // } catch (error) {
+  //   console.log(error); // Выводим ошибку в консоль для отладки
+  //   throw error; // Пробрасываем ошибку выше
+  // }
 }

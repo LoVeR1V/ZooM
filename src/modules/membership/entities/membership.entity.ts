@@ -36,5 +36,5 @@ export class MembershipEntity {
     onDelete: 'RESTRICT'
   })
   @JoinColumn({name: 'user_id'})
-  user_id: UserEntity;
+  user: UserEntity;
 }

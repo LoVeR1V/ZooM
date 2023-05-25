@@ -40,4 +40,20 @@ export class TicketsController {
   ): Promise<void> {
     return await this.ticketsService.deleteTicketById(id);
   }
+
+  //  @Get(':id/tickets')
+  // async getUserTickets(@Param('id') id: number): Promise<TicketEntity[]> {
+  //   return await this.usersService.getUserTickets(id);
+  // }
+
+
+  
+
+  // @Get('get-user-tickets')
+  // async getUserTickets(
+  //   @Req() req,
+  // ): Promise<TicketEntity[]> {
+  //   return await this.ticketsService.getUserTickets(req.user);
+  // }
+
 }
