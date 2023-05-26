@@ -15,4 +15,8 @@ export class TicketTypeDTO {
 	@MaxLength(1000)
 	description: string;
 
+	@IsNumber()
+  @IsNotEmpty()
+  type_price: number;
+
 }

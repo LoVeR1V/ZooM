@@ -13,6 +13,9 @@ export class TicketTypeEntity {
 	@Column({type: 'mediumtext'})
   description: string;
 
+  @Column({type: 'decimal'})
+  type_price: number;
+
   @OneToMany(() => TicketEntity, (ticket) => ticket.ticket_type_id)
   tickets: TicketEntity[];
 }
