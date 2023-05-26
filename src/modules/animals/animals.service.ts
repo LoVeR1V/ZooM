@@ -1,7 +1,8 @@
-import { Injectable, NotFoundException, Param, Put } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException, Param, Put } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { AnimalEntity } from './entities/animals.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { ZoneEntity } from './entities/zone.entity';
 
 
 @Injectable()
@@ -9,6 +10,8 @@ export class AnimalsService {
   constructor(
     @InjectRepository(AnimalEntity)
     private readonly animalRepository: Repository<AnimalEntity>,
+    @InjectRepository(ZoneEntity)
+    private readonly zoneRepository: Repository<ZoneEntity>,
   ) {}
 
     async createAnimal(animal: AnimalEntity): Promise<AnimalEntity> {
@@ -48,6 +51,40 @@ async deleteAnimalById(id: number, user?: any): Promise<void> {
     if(result.affected === 0) {
       throw new NotFoundException(`Animal with id ${id} not found`);
     }
+  }
+
+  // async getAnimalForZone(user: any): Promise<AnimalEntity[]> {
+  //   if (!user) {
+  //     throw new HttpException('User object not provided', HttpStatus.BAD_REQUEST);
+  //   }
+
+  //   const reqZone = await this.zoneRepository.findOne({
+  //     where: {id_zone: user.zone_id}
+  //   });
+
+  //   if (!reqZone) {
+  //     throw new HttpException('Requested Zone not found', HttpStatus.NOT_FOUND);
+  //   }
+
+  //   const ZoneRows = await this.animalRepository.find({
+  //     where: {zone: reqZone},
+  //   })
+
+  //   // if (user.role_name !== 'admin' && user.id_zone !== reqZone.id_zone) {
+  //   //   throw new HttpException('Forbidden resource', HttpStatus.FORBIDDEN);
+  //   // }
+
+  //   // if(user.role_name == 'user') {
+  //   //   throw new HttpException('Forbidden resource', HttpStatus.FORBIDDEN);
+  //   // }
+
+  //   return ZoneRows;
+  // }
+
+  async getAnimalsByZoneId(zoneId: number): Promise<AnimalEntity[]> {
+  return await this.animalRepository.find({
+    where: { zone: { id_zone: zoneId } },
+    });
   }
 
 }

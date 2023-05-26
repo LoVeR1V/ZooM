@@ -48,33 +48,48 @@ export class TicketsService {
     }
   }
 
+  async getTicketsByTourId(TourId: number): Promise<TicketEntity[]> {
+  return await this.ticketRepository.find({
+    where: { tour: { id_tour: TourId } },
+    });
+  }
+
   
+// работает с авторизованным юзером
+  async getUserTickets(user: any): Promise<TicketEntity[]> {
+    if (!user) {
+      throw new HttpException('User object not provided', HttpStatus.BAD_REQUEST);
+    }
 
-  // async getUserTickets(user: any): Promise<TicketEntity[]> {
-  //   if (!user) {
-  //     throw new HttpException('User object not provided', HttpStatus.BAD_REQUEST);
-  //   }
+    const requiredUser = await this.usersService.getUserById(user.id_user);
 
-  //   const requiredUser = await this.usersService.getUserById(user.id_user);
+    if (!requiredUser) {
+      throw new HttpException('Requested user not found', HttpStatus.NOT_FOUND);
+    }
 
-  //   if (!requiredUser) {
-  //     throw new HttpException('Requested user not found', HttpStatus.NOT_FOUND);
-  //   }
+    const tickets = await this.ticketRepository.find({
+      where: {user: requiredUser},
+    })
 
-  //   const tickets = await this.ticketRepository.find({
-  //     where: {user: requiredUser},
-  //   })
+    return tickets;
+  }
 
-  //   // if (user.role_name !== 'admin' && user.id_user !== requiredUser.id_user) {
-  //   //   throw new HttpException('Forbidden resource', HttpStatus.FORBIDDEN);
-  //   // }
+//тест того шо выше
+  async getUserTicketsById(user_id: number): Promise<TicketEntity[]> {
+    
+    const requiredUser = await this.usersService.getUserById(user_id);
 
-  //   // if(user.role_name == 'vet') {
-  //   //   throw new HttpException('Forbidden resource', HttpStatus.FORBIDDEN);
-  //   // }
+    if (!requiredUser) {
+      throw new HttpException('Requested user not found', HttpStatus.NOT_FOUND);
+    }
 
-  //   return tickets;
-  // }
+    const tickets = await this.ticketRepository.find({
+      where: {user: requiredUser},
+    })
 
+   
+
+    return tickets;
+  }
 
 }

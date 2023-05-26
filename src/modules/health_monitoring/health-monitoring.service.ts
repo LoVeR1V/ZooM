@@ -2,12 +2,14 @@ import { Injectable, NotFoundException, Param, Put } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { HealthMonitoringEntity } from './entities/health-monitoring.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { StaffService } from '../staff/staff.service';
 
 @Injectable()
 export class HealthMonitoringService {
 	constructor(
     @InjectRepository(HealthMonitoringEntity)
-    private healthRepository: Repository<HealthMonitoringEntity>,
+    private readonly healthRepository: Repository<HealthMonitoringEntity>,
+    private readonly staffService: StaffService,
   ) {}
 
     async createHealth(health: HealthMonitoringEntity): Promise<HealthMonitoringEntity> {
@@ -43,6 +45,18 @@ export class HealthMonitoringService {
     if(result.affected === 0) {
       throw new NotFoundException(`Health with id ${id} not found`);
     }
+  }
+
+    async createHealing(heal: HealthMonitoringEntity, staff_id: number): Promise<HealthMonitoringEntity> {
+    const heal_staff = await this.staffService.getStaffById(staff_id);
+  
+    if (!heal_staff) {
+      throw new NotFoundException(`Staff with id ${staff_id} not found`);
+    }
+  
+    heal.staff = heal_staff;
+  
+    return await this.healthRepository.save(heal);
   }
 
 }

@@ -48,10 +48,13 @@ export class AnimalEntity {
   // })
   tours: TourEntity[];
 
-	@ManyToMany(() => HealthMonitoringEntity, (monitoring) => monitoring.animals, {
-    onUpdate: 'CASCADE',
-    onDelete: 'RESTRICT'
-  })
-  monitorings: HealthMonitoringEntity;
+	// @ManyToMany(() => HealthMonitoringEntity, (monitoring) => monitoring.animals, {
+  //   onUpdate: 'CASCADE',
+  //   onDelete: 'RESTRICT'
+  // })
+  // monitorings: HealthMonitoringEntity;
+
+   @ManyToMany(() => HealthMonitoringEntity, (monitoring) => monitoring.animals)
+  monitorings: HealthMonitoringEntity[];
 
 }

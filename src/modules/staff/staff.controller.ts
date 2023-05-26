@@ -43,4 +43,9 @@ export class StaffController {
     return await this.staffService.deleteStaffById(id);
   }
 
+  @Get('by-speciality/:specialityId')
+  async getStaffBySpecialityId(@Param('specialityId') zoneId: number): Promise<StaffEntity[]> {
+  return await this.staffService.getStaffBySpecialityId(zoneId);
+}
+
 }

@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Req } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Req } from '@nestjs/common';
 import { HealthMonitoringService } from './health-monitoring.service';
 import { HealthMonitoringDTO } from './DTO/health-monitoring.dto';
 import { HealthMonitoringEntity } from './entities/health-monitoring.entity';
@@ -38,6 +38,17 @@ export class HealthMonitoringController {
     @Param('id') id: number,
   ): Promise<void> {
     return await this.healthMonitoringService.deleteHealthById(id);
+  }
+
+  //@Roles('')
+  @Post('create-healing') 
+  async createHealing(
+    @Body() createHealDTO: HealthMonitoringDTO,
+    @Body('staff_id', new ParseIntPipe()) staff_id: number
+    ): Promise<HealthMonitoringEntity> {
+    const heal = new HealthMonitoringEntity();
+    Object.assign(heal, createHealDTO);
+    return await this.healthMonitoringService.createHealing(heal, staff_id);
   }
 
 

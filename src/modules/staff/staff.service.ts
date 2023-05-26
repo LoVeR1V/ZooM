@@ -46,4 +46,10 @@ export class StaffService {
     }
   }
 
+  async getStaffBySpecialityId(SpecialityId: number): Promise<StaffEntity[]> {
+  return await this.staffRepository.find({
+    where: { speciality: { id_speciality: SpecialityId } },
+    });
+  }
+
 }

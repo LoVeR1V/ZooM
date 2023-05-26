@@ -41,19 +41,30 @@ export class TicketsController {
     return await this.ticketsService.deleteTicketById(id);
   }
 
+  @Get('by-tour/:tourId')
+  async getTicketsByTourId(@Param('tourId') TourId: number): Promise<TicketEntity[]> {
+  return await this.ticketsService.getTicketsByTourId(TourId);
+}
+
   //  @Get(':id/tickets')
   // async getUserTickets(@Param('id') id: number): Promise<TicketEntity[]> {
   //   return await this.usersService.getUserTickets(id);
   // }
 
-
   
-
+//для авторизированого юзера
   // @Get('get-user-tickets')
   // async getUserTickets(
   //   @Req() req,
   // ): Promise<TicketEntity[]> {
   //   return await this.ticketsService.getUserTickets(req.user);
   // }
+//тестовый того шо выше
+  @Get('get-user-tickets/:user_id')
+  async getUserTicketsById(
+    @Param('user_id') user_id: number,
+  ): Promise<TicketEntity[]> {
+    return await this.ticketsService.getUserTicketsById(user_id);
+  }
 
 }

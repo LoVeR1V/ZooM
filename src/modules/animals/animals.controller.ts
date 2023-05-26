@@ -41,6 +41,17 @@ export class AnimalsController {
     return await this.animalsService.deleteAnimalById(id);
   }
 
+//  @Get('get-animal-zone')
+//   async getAnimalForZone(
+//     @Req() req,
+//   ): Promise<AnimalEntity[]> {
+//     return await this.animalsService.getAnimalForZone(req.user);
+//   }
 
+
+  @Get('by-zone/:zoneId')
+  async getAnimalsById(@Param('zoneId') zoneId: number): Promise<AnimalEntity[]> {
+  return await this.animalsService.getAnimalsByZoneId(zoneId);
+  }
 
 }
