@@ -10,4 +10,7 @@ export class MembershipTypeDTO {
 	@MaxLength(45)
 	name_mem_type: string;
 
+	@IsNumber()
+  @IsNotEmpty()
+  mem_type_price: number;
 }

@@ -10,6 +10,9 @@ export class MembershipTypeEntity {
   @Column()
   name_mem_type: string;
 
+  @Column({type: 'decimal'})
+  mem_type_price: number;
+
   @OneToMany(() => MembershipEntity, (membership) => membership.membership_type_id)
   memberships: MembershipEntity[];
 }
