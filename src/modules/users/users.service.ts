@@ -48,6 +48,14 @@ export class UsersService {
     }
   }
 
+  async getUserByEmail(email: string): Promise<UserEntity | undefined> {
+    return await this.userRepository.findOne({
+      where: { email },
+      relations: ['user_role_id'] 
+    });
+  }
+
+
 //   async getUserTickets(id: number): Promise<TicketEntity[]> {
 //   const user = await this.getUserById(id);
 //   if (!user) {

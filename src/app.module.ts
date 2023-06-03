@@ -28,40 +28,51 @@ import { MembershipModule } from './modules/membership/membership.module';
 import { TicketsModule } from './modules/tickets/tickets.module';
 import { ToursModule } from './modules/tours/tours.module';
 import { UserModule } from './modules/users/users.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { AuthService } from './modules/auth/auth.service';
+import { RolesGuard } from './modules/auth/guards/roles.guard';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
 
   
   imports: [
-    TypeOrmModule.forRoot({
-      "type": "mysql",
-      "host": "localhost",
-      "port": 3306,
-      "username": "root",
-      "password": "root",
-      "database": "mydb",
-      "synchronize": false, //If true, then all entities that are not here but are in MySQL will be deleted in MySQL
-      "entities": [
-        UserEntity,
-        UserRoleEntity,
-        UserStatusEntity,
-        TourEntity,
-        TourTypeEntity,
-        TicketEntity,
-        TicketTypeEntity,
-        TicketStatusEntity,
-        AnimalEntity,
-        StaffEntity,
-        LicenseEntity,
-        SpecialityEntity,
-        HealthMonitoringEntity,
-        HealthStatusEntity,
-        ZoneEntity,
-        MembershipEntity,
-        MembershipStatusEntity,
-        MembershipTypeEntity
-      ],   
+    ConfigModule.forRoot(),
+    TypeOrmModule.forFeature([UserRoleEntity]),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        type: "mysql",
+        host: "localhost",
+        port: 3306,
+        username: "root",
+        password: "root",
+        database: "mydb",
+        synchronize: false, //If true, then all entities that are not here but are in MySQL will be deleted in MySQL
+        entities: [
+          UserEntity,
+          UserRoleEntity,
+          UserStatusEntity,
+          TourEntity,
+          TourTypeEntity,
+          TicketEntity,
+          TicketTypeEntity,
+          TicketStatusEntity,
+          AnimalEntity,
+          StaffEntity,
+          LicenseEntity,
+          SpecialityEntity,
+          HealthMonitoringEntity,
+          HealthStatusEntity,
+          ZoneEntity,
+          MembershipEntity,
+          MembershipStatusEntity,
+          MembershipTypeEntity
+        ],   
+      }),
+      inject: [ConfigService],
     }),
+    AuthModule,
     AnimalsModule,
     HealthMonitoringModule,
     StaffModule,
@@ -71,10 +82,7 @@ import { UserModule } from './modules/users/users.module';
     UserModule
   ],
   controllers: [AppController],
-  providers: [AppService],
-  
+  providers: [AppService, RolesGuard],
+  exports: [RolesGuard],
 })
-
-
-
 export class AppModule {}
