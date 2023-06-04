@@ -44,7 +44,7 @@ export class UserDTO {
   phone: string;
 
 	@IsDateString()
-  @Type(() => Date)
+ 
   @IsNotEmpty()
   birthday: Date;
 

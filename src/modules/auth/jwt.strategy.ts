@@ -12,24 +12,24 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 		) {
 		super({
 			jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: configService.get<string>('JWT_SECRET'),
+      secretOrKey: process.env.JWT_SECRET,
 		});
 	}
 
 	  async validate(payload: any) {
-    let validatedEntity;
-    if (payload.user_role_id === 1 || payload.user_role_id === 3) {
-      validatedEntity = await this.authService.validateUserById(payload.id);
-    } 
-  
-    if (!validatedEntity) {
-      throw new UnauthorizedException();
-    }
-  
-    return { 
-      ...validatedEntity, 
-      user_role_id: payload.user_role_id, 
-      // role_name: validatedEntity.user_role.role_name  ?)
+      let validatedEntity;
+      if (payload.user_role_id === 1 || payload.user_role_id === 3) {
+        validatedEntity = await this.authService.validateUserById(payload.id);
+      } 
+    
+      if (!validatedEntity) {
+        throw new UnauthorizedException();
+      }
+    
+      return { 
+        ...validatedEntity, 
+        user_role_id: payload.user_role_id, 
+        // role_name: validatedEntity.user_role.role_name  ?)
     };
   }
 }
