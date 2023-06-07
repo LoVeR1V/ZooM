@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { UserEntity } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -20,9 +20,10 @@ export class UsersService {
     return await this.userRepository.save(user);
   }
 
-   async getUserById(id: number): Promise<UserEntity> {
+   async getUserById(id: number, user?: any): Promise<UserEntity> {
       return await this.userRepository.findOne({
         where: {id_user: id},
+        relations: ['user_role_id']
       })
     }
 
@@ -30,17 +31,29 @@ export class UsersService {
     return await this.userRepository.find();
   }
 
-  async updateUserById(id: number, updatedUser: UserEntity): Promise<UserEntity> {
-  const user = await this.userRepository.findOne({
-        where: {id_user:id},
-      })
+  async updateUserById(id: number, updatedUser: Partial<UserEntity>, jwt_user?: any): Promise<UserEntity> {
 
-  if (!user) {
-    throw new NotFoundException(`user with ID ${id} not found`);
-  }
-  Object.assign(user, updatedUser);
-  return await this.userRepository.save(user);
-  }
+    if((jwt_user.name_role !== 'admin' && Number(jwt_user.id_user) !== Number(id)) || !(await this.getUserById(id, jwt_user)))
+      {
+        throw new HttpException('Forbidden resource', HttpStatus.FORBIDDEN);
+      }
+
+    const user = await this.userRepository.findOne({
+          where: {id_user:id},
+        })
+
+    if (!user) {
+      throw new NotFoundException(`user with ID ${id} not found`);
+    }
+
+    
+    if (updatedUser.password) {   //hash password
+      const salt = await bcrypt.genSalt(12);
+      user.password = await bcrypt.hash(updatedUser.password, salt);
+    }
+    
+    return await this.userRepository.save(user);
+    }
 
    async deleteUserById(id: number, user?: any): Promise<void> {
   

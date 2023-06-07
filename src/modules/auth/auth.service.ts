@@ -42,6 +42,7 @@ export class AuthService {
 		return {
 			access_token: this.jwtService.sign(payload,{
 			secret: this.configService.get('JWT_SECRET'), expiresIn}),
+
 		};
 	}
 

@@ -1,7 +1,10 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Req } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Req, UseGuards } from '@nestjs/common';
 import { AnimalsService } from './animals.service';
 import { AnimalDTO } from './DTO/animals.dto';
 import { AnimalEntity } from './entities/animals.entity';
+import { JwtAuthGuard } from '../auth/guards/auth.guard';
+import { RolesGuard } from '../auth/guards/roles.guard';
+import { Roles } from '../auth/decorators/roles.decorator';
 
 
 @Controller('animals')
@@ -10,6 +13,8 @@ export class AnimalsController {
 		
 	}
 	
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('admin', 'vet')
 	@Post('create-animal')
 	async createAnimal(@Body() createAnimalDTO: AnimalDTO ): Promise<AnimalEntity>{
 		const animalEntity = new AnimalEntity();
@@ -17,16 +22,22 @@ export class AnimalsController {
 		return await this.animalsService.createAnimal(animalEntity);	
 	}
 
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('admin', 'vet')
 	@Get(':id')
   async getAnimalById(@Param('id') id: number): Promise<AnimalEntity> {
     return await this.animalsService.findAnimalById(id);
   }
 
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('admin', 'vet')
 	@Get('get-all-animals')
   async getAllAnimals(): Promise<AnimalEntity[]> {
     return await this.animalsService.getAllAnimals();
   }
 
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('admin', 'vet')
 	@Put(':id')
   async updateAnimalById(@Param('id') id: number, @Body() updateAnimalDTO: AnimalDTO): Promise<AnimalEntity> {
     const updatedAnimal = new AnimalEntity();
@@ -34,6 +45,8 @@ export class AnimalsController {
     return await this.animalsService.updateAnimalById(id, updatedAnimal);
   }
 
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('admin', 'vet')
 	@Delete(':id')
   async deleteAnimalById(
     @Param('id') id: number,
@@ -49,8 +62,10 @@ export class AnimalsController {
 //   }
 
 
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('admin', 'vet')
   @Get('by-zone/:zoneId')
-  async getAnimalsById(@Param('zoneId') zoneId: number): Promise<AnimalEntity[]> {
+  async getAnimalsByZoneId(@Param('zoneId') zoneId: number): Promise<AnimalEntity[]> {
   return await this.animalsService.getAnimalsByZoneId(zoneId);
   }
 

@@ -26,7 +26,6 @@ export class TourDTO {
 	tour_descr: string;
 
 	@IsDateString()
-  @Type(() => Date)
   @IsNotEmpty()
   tour_date: Date;
 

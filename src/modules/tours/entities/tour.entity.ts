@@ -21,7 +21,7 @@ export class TourEntity {
     onDelete: 'RESTRICT'
   })
   @JoinColumn({name: 'zone_id'})
-  zone: TourEntity;
+  zone_id: TourEntity;
 
 	@Column()
 	name_tour: string;

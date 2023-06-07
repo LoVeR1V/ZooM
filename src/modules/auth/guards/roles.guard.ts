@@ -38,7 +38,6 @@ export class RolesGuard implements CanActivate {
     if (!authEntityRole) {
       return false;
     }
-		
     return requiredRoles.some((role) => role === authEntityRole.name_role); //is used to check if the user.roles array contains at least one of the required requiredRoles.
 
 	}

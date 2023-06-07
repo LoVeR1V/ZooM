@@ -1,4 +1,4 @@
-import { IsDateString, IsInt, IsNotEmpty, IsNumber, IsOptional, IsString, MaxLength } from "class-validator";
+import { IsDate, IsDateString, IsInt, IsNotEmpty, IsNumber, IsOptional, IsString, MaxLength } from "class-validator";
 import { Transform, Type } from "class-transformer";
 import { ZoneDTO } from  "./zone.dto";
 
@@ -36,13 +36,11 @@ export class AnimalDTO {
 	@MaxLength(255)
 	image_url: string;
 
-	@IsDateString()
-  @Type(() => Date)
+	@IsDateString({ strict: false })
   @IsNotEmpty()
   born_at: Date;
 
-	@IsDateString()
-  @Type(() => Date)
+	@IsDateString({ strict: false })
   died_at: Date;
 	
 	

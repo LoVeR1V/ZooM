@@ -26,12 +26,10 @@ export class HealthMonitoringDTO {
 	notes: string;
 
 	@IsDateString()
-  @Type(() => Date)
   @IsNotEmpty()
   ill_start: Date;
 
 	@IsDateString()
-  @Type(() => Date)
   ill_end: Date;
 
 	@IsString()

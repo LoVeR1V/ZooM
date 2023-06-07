@@ -2,13 +2,17 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { TourEntity } from './entities/tour.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { ZoneEntity } from '../animals/entities/zone.entity';
 
 @Injectable()
 export class ToursService {
 
 	constructor(
     @InjectRepository(TourEntity)
-    private tourRepository: Repository<TourEntity>,
+    private readonly tourRepository: Repository<TourEntity>,
+    @InjectRepository(TourEntity)
+    private readonly zoneRepository: Repository<ZoneEntity>,
+   
   ) {}
 
   async createTour(tour: TourEntity): Promise<TourEntity> {
@@ -46,4 +50,6 @@ export class ToursService {
       throw new NotFoundException(`tour with id ${id} not found`);
     }
   }
+
+
 }

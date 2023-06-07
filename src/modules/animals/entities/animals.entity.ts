@@ -32,10 +32,10 @@ export class AnimalEntity {
   image_url: string;
 
 	@Column({ type: 'date' })
-	born_at: string;
+	born_at: Date;
 
-	@Column({ type: 'datetime' })
-	died_at: string;
+	@Column({ type: 'date' })
+	died_at: Date;
 
 	@OneToMany(() => StaffEntity, (staff) => staff.animal)
 	staff1: StaffEntity[];

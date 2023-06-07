@@ -16,7 +16,7 @@ export class ZoneEntity {
 	@OneToMany(() => AnimalEntity,(animal) => animal.zone)
 	animals: AnimalEntity[];
 
-	@OneToMany(() => TourEntity,(tour) =>tour.zone)
+	@OneToMany(() => TourEntity,(tour) =>tour.zone_id)
 	tours: TourEntity[];
 
 }

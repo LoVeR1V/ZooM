@@ -18,7 +18,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
 	  async validate(payload: any) {
       let validatedEntity;
-      if (payload.user_role_id === 1 || payload.user_role_id === 3) {
+      if (payload.user_role_id === 1 || payload.user_role_id === 2 ||payload.user_role_id === 3) {
         validatedEntity = await this.authService.validateUserById(payload.id);
       } 
     

@@ -49,7 +49,6 @@ export class StaffDTO {
 	address: string;
 
 	@IsDateString()
-  @Type(() => Date)
   @IsNotEmpty()
   works_from: Date;
 
@@ -58,7 +57,6 @@ export class StaffDTO {
   salary: number;
 
 	@IsDateString()
-  @Type(() => Date)
   @IsNotEmpty()
   birthdate: Date;
 

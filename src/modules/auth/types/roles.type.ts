@@ -1,1 +1,1 @@
-	type Role = 'admin' | 'user' | 'vet';
+	type Role = 'user'| 'admin' | 'vet' | 'adm';

@@ -55,8 +55,35 @@ export class TicketsService {
   }
 
   
-// работает с авторизованным юзером
-  async getUserTickets(user: any): Promise<TicketEntity[]> {
+  //   async getUserTickets(user: any): Promise<TicketEntity[]> {
+  //   if (!user) {
+  //     throw new HttpException('User object not provided', HttpStatus.BAD_REQUEST);
+  //   }
+
+  //   const reqUser = await this.usersService.getUserById(user.id_user);
+
+  //   if (!reqUser) {
+  //     throw new HttpException('Requested user not found', HttpStatus.NOT_FOUND);
+  //   }
+
+  //   const tickets = await this.ticketRepository.find({
+  //     where: {user: reqUser},
+  //   })
+
+  //   if (user.name_role !== 'admin' && user.id_user !== reqUser.id_user) {
+  //     throw new HttpException('Forbidden resource', HttpStatus.FORBIDDEN);
+  //   }
+
+  //   if(user.name_role == 'vet') {
+  //     throw new HttpException('Forbidden resource', HttpStatus.FORBIDDEN);
+  //   }
+
+  //   return tickets;
+  // }
+
+//работает с авторизованным юзером
+  async getUserTickets(id: number, user: any): Promise<TicketEntity[]> {
+    
     if (!user) {
       throw new HttpException('User object not provided', HttpStatus.BAD_REQUEST);
     }
@@ -71,11 +98,25 @@ export class TicketsService {
       where: {user: requiredUser},
     })
 
-    return tickets;
+    
+
+    if (user.name_role !== 'admin' && user.id_user !== requiredUser.id_user) {
+      throw new HttpException('Forbidden resource', HttpStatus.FORBIDDEN);
+    }
+
+    if(user.name_role == 'vet') {
+      throw new HttpException('Forbidden resource', HttpStatus.FORBIDDEN);
+    }
+
+    return await tickets;
   }
 
 //тест того шо выше
   async getUserTicketsById(user_id: number): Promise<TicketEntity[]> {
+
+    if (!user_id) {
+      throw new HttpException('User object not provided', HttpStatus.BAD_REQUEST);
+    }
     
     const requiredUser = await this.usersService.getUserById(user_id);
 
@@ -86,9 +127,6 @@ export class TicketsService {
     const tickets = await this.ticketRepository.find({
       where: {user: requiredUser},
     })
-
-   
-
     return tickets;
   }
 

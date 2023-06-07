@@ -26,7 +26,6 @@ export class TicketDTO {
   ticket_status_id: number;
 
 	@IsDateString()
-  @Type(() => Date)
   @IsNotEmpty()
   date: Date;
 

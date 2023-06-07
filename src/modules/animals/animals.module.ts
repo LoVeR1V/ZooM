@@ -4,14 +4,17 @@ import { AnimalsService } from './animals.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AnimalEntity } from './entities/animals.entity';
 import { ZoneEntity } from './entities/zone.entity';
+import { UserRoleEntity } from '../users/entities/user-role.entity';
+import { UserModule } from '../users/users.module';
+import { RolesGuard } from '../auth/guards/roles.guard';
 
 @Module({
 
   imports: [
     TypeOrmModule.forFeature([
-      AnimalEntity,ZoneEntity]),
+      AnimalEntity,ZoneEntity,UserRoleEntity]),UserModule
   ],
   controllers: [AnimalsController],
-  providers: [AnimalsService]
+  providers: [AnimalsService,RolesGuard]
 })
 export class AnimalsModule {}
